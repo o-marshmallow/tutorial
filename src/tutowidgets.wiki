@@ -42,15 +42,19 @@ Section {{{ [%%shared ... ] }}} is compiled on both the server and client side p
 <<code language="ocaml" |
 [%%shared
     open Eliom_content
-    open Html5
-    open Html5.D
+    open Html
+    open Html.D
 ]
 
 module Ex_app =
   Eliom_registration.App (struct let application_name = "ex" end)
 
 let _ =
-  Ex_app.register_service ~path:[] ~get_params:Eliom_parameter.unit
+  Ex_app.register
+    (Eliom_service.create
+       ~id:(Eliom_service.Path [])
+       ~meth:(Eliom_service.Get Eliom_parameter.unit)
+       ())
     (fun () () ->
        Lwt.return
          (Eliom_tools.D.html ~title:"ex" ~css:[["css"; "ex.css"]]
@@ -171,8 +175,8 @@ The code is exactly the same, with the following modifications:
 <<code language="ocaml" |
 [%%shared
     open Eliom_content
-    open Html5
-    open Html5.D
+    open Html
+    open Html.D
 ]
 
 module Ex_app =
@@ -197,7 +201,11 @@ let mywidget s1 s2 =
   div ~a:[a_class ["mywidget"]] [button; content]
 
 let _ =
-  Ex_app.register_service ~path:[] ~get_params:Eliom_parameter.unit
+  Ex_app.register
+    (Eliom_service.create
+       ~id:(Eliom_service.Path [])
+       ~meth:(Eliom_service.Get Eliom_parameter.unit)
+       ())
     (fun () () ->
        Lwt.return
          (Eliom_tools.D.html ~title:"ex" ~css:[["css"; "ex.css"]]
@@ -226,8 +234,8 @@ closing the currently opened window.
 <<code language="ocaml" |
 [%%shared
     open Eliom_content
-    open Html5
-    open Html5.D
+    open Html
+    open Html.D
 ]
 
 module Ex_app =
@@ -257,8 +265,12 @@ let%shared mywidget s1 s2 =
   div ~a:[a_class ["mywidget"]] [button; content]
 
 let _ =
-  Ex_app.register_service ~path:[] ~get_params:Eliom_parameter.unit
-    (fun () () ->
+  Ex_app.register
+    (Eliom_service.create
+       ~id:(Eliom_service.Path [])
+       ~meth:(Eliom_service.Get Eliom_parameter.unit)
+       ())  
+  (fun () () ->
        let _ = [%client
          (Dom.appendChild
             (Dom_html.document##.body)
@@ -287,8 +299,8 @@ evaluated, and it has an abstract type.
 <<code language="ocaml" |
 [%%shared
     open Eliom_content
-    open Html5
-    open Html5.D
+    open Html
+    open Html.D
 ]
 
 module Ex_app =
@@ -318,7 +330,11 @@ let%shared mywidget set s1 s2 =
   div ~a:[a_class ["mywidget"]] [button; content]
 
 let _ =
-  Ex_app.register_service ~path:[] ~get_params:Eliom_parameter.unit
+    Ex_app.register
+    (Eliom_service.create
+       ~id:(Eliom_service.Path [])
+       ~meth:(Eliom_service.Get Eliom_parameter.unit)
+       ())
     (fun () () ->
        let set1 = new_set () in
        let set2 = new_set () in
