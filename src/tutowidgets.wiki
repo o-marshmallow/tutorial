@@ -50,11 +50,9 @@ module Ex_app =
   Eliom_registration.App (struct let application_name = "ex" end)
 
 let _ =
-  Ex_app.register
-    (Eliom_service.create
+  Ex_app.create
        ~id:(Eliom_service.Path [])
        ~meth:(Eliom_service.Get Eliom_parameter.unit)
-       ())
     (fun () () ->
        Lwt.return
          (Eliom_tools.D.html ~title:"ex" ~css:[["css"; "ex.css"]]
@@ -201,11 +199,9 @@ let mywidget s1 s2 =
   div ~a:[a_class ["mywidget"]] [button; content]
 
 let _ =
-  Ex_app.register
-    (Eliom_service.create
+  Ex_app.create
        ~id:(Eliom_service.Path [])
        ~meth:(Eliom_service.Get Eliom_parameter.unit)
-       ())
     (fun () () ->
        Lwt.return
          (Eliom_tools.D.html ~title:"ex" ~css:[["css"; "ex.css"]]
@@ -265,11 +261,9 @@ let%shared mywidget s1 s2 =
   div ~a:[a_class ["mywidget"]] [button; content]
 
 let _ =
-  Ex_app.register
-    (Eliom_service.create
+  Ex_app.create
        ~id:(Eliom_service.Path [])
-       ~meth:(Eliom_service.Get Eliom_parameter.unit)
-       ())  
+       ~meth:(Eliom_service.Get Eliom_parameter.unit)  
   (fun () () ->
        let _ = [%client
          (Dom.appendChild
@@ -330,11 +324,9 @@ let%shared mywidget set s1 s2 =
   div ~a:[a_class ["mywidget"]] [button; content]
 
 let _ =
-    Ex_app.register
-    (Eliom_service.create
+    Ex_app.create
        ~id:(Eliom_service.Path [])
        ~meth:(Eliom_service.Get Eliom_parameter.unit)
-       ())
     (fun () () ->
        let set1 = new_set () in
        let set2 = new_set () in
